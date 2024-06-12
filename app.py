@@ -1,11 +1,15 @@
-#-----------------------------------------------------------------------------------------
-# Copyright (c) Microsoft Corporation. All rights reserved.
-# Licensed under the MIT License. See LICENSE in the project root for license information.
-#-----------------------------------------------------------------------------------------
-
 from flask import Flask
+from flask import render_template
+import json
+
 app = Flask(__name__)
 
 @app.route("/")
-def hello():
-    return app.send_static_file("index.html")
+def index():
+    with open('data/products.json') as f:
+        data = json.load(f)
+
+    return render_template('index.html', products=data)
+
+if __name__ == "__main__":
+    app.run(debug=True)
